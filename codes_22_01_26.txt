@@ -1,0 +1,883 @@
+CP_U1_AP1_Boat:
+You are given an array people, where each element people[i] represents the 
+weight of the i-th person. 
+You also have an unlimited number of boats, but each boat has a maximum weight 
+capacity defined by limit.
+
+Each boat can carry at most two people at the same time, as long as their 
+combined weight does not exceed the limit.
+
+Your task is to determine the minimum number of boats required to transport all 
+the given people across safely.
+
+Input Format:
+-------------
+Line 1: An integer N, representing the number of people.
+Line 2: N space-separated integers, representing the weight of each person.
+Line 3: An integer limit, representing the maximum weight capacity of a boat.
+
+Output Format:
+--------------
+Print a single integer, the minimum number of boats needed.
+
+Sample Input-1:
+---------------
+2
+1 2
+3
+
+Sample Output-1:
+----------------
+1
+
+Explanation: Only 1 boat is needed, as both people (weights 1 and 2) fit within 
+the limit of 3.
+
+Sample Input-2:
+---------------
+4
+3 2 2 1
+3
+
+Sample Output-2:
+----------------
+3
+
+Explanation:
+------------
+Boat 1: (1,2)
+Boat 2: (2)
+Boat 3: (3)
+Total boats required: 3.
+
+Sample Input-3:
+---------------
+4
+3 5 3 4
+5
+
+Sample Output-3:
+----------------
+4
+
+Explanation:
+------------
+Boat 1: (3)
+Boat 2: (3)
+Boat 3: (4)
+Boat 4: (5)
+Total boats required: 4.
+import java.util.*;
+class Solution{
+    public static int boat(int n, int[] arr, int capacity){
+        int left = 0;
+        int right = n-1;
+        int boats = 0;
+        while(left<=right){
+            int sum = arr[left]+arr[right];
+            if(sum<=capacity){
+                left++;
+                right--;
+                boats++;
+            }
+            else{
+                right--;
+                boats++;
+            }
+        }
+        return boats;
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = sc.nextInt();
+        }
+        Arrays.sort(arr);
+        int cap = sc.nextInt();
+        System.out.println(boat(n,arr,cap));
+    }
+}
+
+
+
+
+
+CP_U1_AP11_Two_Sum:
+You are given a 1-indexed array of integers, numbers, sorted in non-decreasing 
+order. 
+Your task is to find two distinct numbers in the array such that their sum 
+equals a given target.
+
+Return their 1-based indices as an array [index1, index2], 
+where 1 ≤ index1 < index2 ≤ numbers.length.
+
+Constraints:
+------------
+-> There is exactly one valid solution.
+-> You cannot use the same element twice.
+-> Your solution must use only constant extra space.
+
+Input Format:
+-------------
+Line-1: An integer N, representing the size of the array.
+Line-2: N space-separated integers, representing the array elements.
+Line-3: An integer X, representing the target sum.
+
+Output Format:
+--------------
+Line-1: Print indices as an array if there exists a pair whose sum is equal to X
+
+Sample Input-1:
+---------------
+4
+2 7 11 15
+9
+
+Sample Output-1:
+----------------
+[1, 2]
+
+Explanation:
+-------------
+The sum of 2 and 7 is 9.
+Their 1-based indices are 1 and 2.
+
+Sample Input-2:
+---------------
+3
+2 3 4
+6
+
+Sample Output-2:
+----------------
+[1, 3]
+
+Explanation:
+------------
+The sum of 2 and 4 is 6.
+Their 1-based indices are 1 and 3.
+
+Sample Input-3:
+---------------
+2
+-1 0
+-1
+
+Sample Output-3:
+----------------
+[1, 2]
+
+Explanation:
+------------
+The sum of -1 and 0 is -1.
+Their 1-based indices are 1 and 2.
+
+
+import java.util.*;
+class TwoSum{
+    public static int[] twoSum(int n, int[] arr, int target){
+        int[] res = new int[2];
+        int left = 0, right = n-1;
+        while(left<right){
+            int currSum = arr[left]+arr[right];
+            if(currSum>target){
+                right--;
+            }
+            else if(currSum<target){
+                left++;
+            }
+            else if(currSum ==target){
+                res[0] = left+1;
+                res[1] = right+1;
+                break;
+            }
+        }
+        return res;
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = sc.nextInt();
+        }
+        int x = sc.nextInt();
+        int[] res = twoSum(n,arr,x);
+        for(int i =0;i<2;i++){
+            System.out.print(res[i]+",");
+        }
+    }
+}
+
+
+
+
+
+CP_U1_AP5_Duplicate_Window
+Given an integer array of nums and an integer window size X, 
+return true if there are duplicate values (nums[i]== nums[j])in that Window(X)
+X size is always <= abs(i - j) where i and j are two distinct indices of array.
+
+Input Format:
+-------------
+Line-1: An integer N, Array Size
+Line-2: Space separated integers, array elements
+Line-3: An integer X, window size
+
+Output Format:
+--------------
+Line-1: Booelan value, true/false
+
+
+Sample Input-1:
+---------------
+4
+1 2 3 1  
+3 
+
+Sample Output-1: 
+----------------
+false
+
+Sample Input-2:
+---------------
+6
+1 2 3 3 2 3
+2
+
+Sample Output-2: 
+----------------
+true
+
+
+
+CP_U1_AP12_RemoveOneDuplicate
+You are given an array nums of size n+1, 
+where each element is an integer between 1 and n (inclusive).
+
+The array contains exactly one duplicated number, 
+which appears at least twice, while all other numbers appear exactly once.
+
+Your task is to find and return the repeated number without modifying the array 
+and using only constant extra space.
+
+NOTE: For boundary conditions print -1.
+
+Input Format:
+-------------
+Line 1: An integer N, representing n (the range of numbers).
+Line 2: N+1 space-separated integers representing the array nums.
+
+Output Format:
+--------------
+Line-1: A single integer representing the duplicate number.
+
+Sample Input-1:
+---------------
+4
+1 3 4 2 2
+
+Sample Output-1:
+----------------
+2
+
+Sample Input-2:
+---------------
+4
+3 1 3 4 2
+
+Sample Output-2:
+----------------
+3
+
+Sample Input-3:
+---------------
+4
+5 4 3 2 3
+
+Sample Output-3:
+---------------
+-1
+
+Constraints:
+-------------
+-> 1 ≤ n ≤ 10⁵
+-> nums.length = n + 1
+-> 1 ≤ nums[i] ≤ n
+-> All numbers appear exactly once except for one number which appears at least 
+twice.
+
+
+
+
+
+CP_U1_AP6_Fighter
+There is a Game where a fighter consumes power[i] on the i-th hour. 
+
+Given an integer k, for every consecutive sequence of k hours (power[i], 
+power[i+1], ..., power[i+k-1] for all 0 <= i <= n-k), they look at T, 
+the total power consumed during that sequence of k hours (power[i] + 
+power[i+1] + ... + power[i+k-1]):
+
+If T < lower, fighter performed poorly and lose 1 point; 
+If T > upper, fighter performed well and gain 1 point;
+Otherwise, fighter performed normally and there is no change in points.
+
+Initially, the fighter has zero points. Return the total number of points the 
+fighter has after consuming power for power.length hours.
+
+Note that the total points can be negative.
+
+ 
+Input Format
+--------------
+Line-1: An integer N, the arrray length.
+Line-2: Array of integers, power[]
+Line-3: Three integers -subarray length K, lower value and upper value
+
+output Format
+--------------
+An integer total points
+
+Sample Input-1:
+---------------
+4
+7 10 0 0
+2 1 12
+
+Sample Output-1:
+----------------
+0
+
+Explanation:
+------------
+Since k = 2, we consider subarrays of length 2.
+power[0] + power[1] > upper so 1 point is gained.
+lower <= power[1] + power[2] <= upper so no change in points.
+power[2] + power[3] < lower so 1 point is lost.
+
+
+Sample Input-2:
+2
+5 10
+2 0 1
+
+Sample Output-2:
+----------------
+1
+
+Explanation:
+------------
+Since k = 2, we consider subarrays of length 2.
+power[0] + power[1] > upper so 1 point is gained.
+Example 3:
+
+Sample Input-3:
+---------------
+5
+1 2 3 4 5
+1 3 3
+
+Sample Output-3:
+----------------
+0
+
+Explanation:
+------------
+Since k = 1, Since k = 2, we consider subarrays of length 1. and compare it 
+to lower and upper. power[0] and power[1] are less than lower so 2 points are lost. 
+power[3] and power[4] are greater than upper so 2 points are gained.
+import java.util.*;
+class Fighter{
+    public static int fighter(int[] arr, int k, int lower, int upper){
+        int n = arr.length;
+        int points = 0;
+        int sum = 0;
+        for(int i=0;i<k;i++){
+            sum = sum +arr[i];
+        }
+        if(sum<lower){
+                points--;
+            }
+        if(sum>upper){
+            points++;
+        }
+        int windsum = sum;
+        for(int i=k;i<n;i++){
+            windsum = windsum+arr[i]-arr[i-k];
+            if(windsum<lower){
+                points--;
+            }
+            if(windsum>upper){
+                points++;
+            }
+        }
+        return points;
+    }
+    public static void main(String args[]){
+        Scanner sc  = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = sc.nextInt();
+        }
+        int k = sc.nextInt();
+        int low = sc.nextInt();
+        int up = sc.nextInt();
+        System.out.println(fighter(arr,k,low,up));
+    }
+}
+
+
+
+
+
+
+CP_U1_AP_MinimizeMaxDifference
+You are given three sorted integer arrays A[], B[], and C[]. 
+
+Your task is to find one element from each array (A[i], B[j], and C[k]) 
+such that the following expression is minimized:
+    
+   x =  max(∣A[i]−B[j]∣,∣B[j]−C[k]∣,∣C[k]−A[i]∣)
+where |x| denotes the absolute value of x.
+
+You need to return the three selected elements A[i], B[j], and C[k] that result 
+in the minimum possible value of the above expression.
+
+Input Format:
+-------------
+Line-1: An integer n, the size of array A.
+Line-2: n space-separated integers representing array A.
+Line-3: An integer m, the size of array B.
+Line-4: m space-separated integers representing array B.
+Line-5: An integer p, the size of array C. 
+Line-6: p space-separated integers representing array C.
+
+Output Format:
+--------------
+Line-1: Print three space-separated integers A[i] B[j] C[k] that minimize the 
+given expression.
+
+
+Sample Input-1:
+---------------
+3
+1 4 10
+3
+2 15 20
+2
+10 12
+
+Sample Output-1:
+----------------
+10 15 10
+
+Sample Input-2:
+---------------
+24 22 23
+
+Sample Output-1:
+----------------
+10 15 10
+
+Sample Input-2:
+---------------
+3
+0 0 0
+1
+
+Sample Output-2:
+----------------
+0
+
+
+
+
+
+CP_U1_SP5_PalindromeList
+Cliff Shaw is working on the singly linked list.
+He is given a list of boxes arranged as singly linked list,
+where each box is printed a positive number on it.
+
+Your task is to help Mr Cliff to find the given list is equivalent to 
+the reverse of it or not. If yes, print "true", otherwise print "false"
+
+Input Format:
+-------------
+Line-1: space separated integers, boxes as list.
+
+Output Format:
+--------------
+Print a boolean a value.
+
+Sample Input-1:
+---------------
+3 6 2 6 3
+
+Sample Output-1:
+----------------
+true
+
+
+Sample Input-2:
+---------------
+3 6 2 3 6Two brothers want to play a game, 
+The rules of the game are: one player gives two sorted lists of 
+numerical elements and a number (sum). 
+The opponent has to find the closest pair of elements 
+to the given sum.
+-> pair consists of elements from each list
+
+Please help those brothers to develop a program, that takes 
+two sorted lists as input and return a pair as output.
+
+Input Format:
+-------------
+size of list_1
+list_1 values
+size of list_2
+list_2 values
+closest number
+
+Output Format:
+--------------
+comma-separated pair
+
+Sample Input-1:
+---------------
+4
+1 4 5 7
+4
+10 20 30 40
+32
+Sample Output-1
+---------------
+1,30
+
+Sample Input-2
+---------------
+3
+2 4 6
+4
+5 7 11 13
+15
+
+Sample Output-2
+---------------
+2, 13
+
+
+
+
+
+
+CP_U1_SP8_ClosestPair
+Two brothers want to play a game, 
+The rules of the game are: one player gives two sorted lists of 
+numerical elements and a number (sum). 
+The opponent has to find the closest pair of elements 
+to the given sum.
+-> pair consists of elements from each list
+
+Please help those brothers to develop a program, that takes 
+two sorted lists as input and return a pair as output.
+
+Input Format:
+-------------
+size of list_1
+list_1 values
+size of list_2
+list_2 values
+closest number
+
+Output Format:
+--------------
+comma-separated pair
+
+Sample Input-1:
+---------------
+4
+1 4 5 7
+4
+10 20 30 40
+32
+Sample Output-1
+---------------
+1,30
+
+Sample Input-2
+---------------
+3
+2 4 6
+4
+5 7 11 13
+15
+
+Sample Output-2
+---------------
+2, 13
+
+import java.util.*;
+class ClosestPair{
+    public static void close(int n1,int n2,int[] arr1, int[] arr2, int target){
+        int left = 0, right = n2-1;
+        int var1 =0,var2 = 0;
+        int min = Integer.MAX_VALUE;
+        while(left<n1 && right>=0){
+            int sum = arr1[left]+arr2[right];
+            int diff = Math.abs(sum-target);
+            if(diff<min){
+                min = diff;
+                var1 = arr1[left];
+                var2 = arr2[right];
+            }
+            if(sum<target){
+                left++;
+            }
+            else {
+                right--;
+            }
+        }
+        System.out.print(var1+"," +var2);
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n1= sc.nextInt();
+        int[] arr1 = new int[n1];
+        for(int i=0;i<n1;i++){
+            arr1[i] = sc.nextInt();
+        }
+        int n2= sc.nextInt();
+        int[] arr2 = new int[n2];
+        for(int i=0;i<n2;i++){
+            arr2[i] = sc.nextInt();
+        }
+        int key = sc.nextInt();
+        close(n1,n2,arr1,arr2,key);
+    }
+}
+
+
+
+
+
+CP_U1_AP9_Three_Sum_Closest
+You are given an integer array nums of length n and an integer target. 
+Your task is to find three integers in nums such that their sum is closest to 
+the given target.
+
+Return the sum of these three integers.
+
+You may assume that each input would have exactly one solution.
+
+Input Format:
+-------------
+Line-1: An integer n, the size of the array.
+Line-2: n space-separated integers representing the elements of the array nums.
+Line-3: A single integer target.
+
+Output Format:
+--------------
+Line-1: Print a single integer, representing the sum of three integers closest 
+to the target.
+
+Sample Input-1:
+---------------
+4
+-1 2 1 -4
+1
+
+Sample Output-1:
+----------------
+2
+
+Sample Input-2:
+---------------
+3
+0 0 0
+1
+
+Sample Output-2:
+----------------
+0
+
+
+
+
+
+
+CP_U1_AP10_ClosestTripletSum
+You are given three sorted integer arrays A[], B[], and C[], and an integer 
+target.
+Your task is to find one element from each array (A[i], B[j], and C[k]) such 
+that the sum of these three elements is equal to target.
+
+If there is no exact match, return the triplet with the minimum absolute 
+difference to the target.
+
+Input Format:
+-------------
+Line 1: An integer N, the size of the first array.
+Line 2: N space-separated integers representing elements of array A.
+Line 3: An integer M, the size of the second array.
+Line 4: M space-separated integers representing elements of array B.
+Line 5: An integer P, the size of the third array.
+Line 6: P space-separated integers representing elements of array C.
+Line 7: An integer target, the required sum.
+
+Output Format:
+--------------
+Line-1: Print the triplet (A[i], B[j], C[k]) that either matches the target or 
+has the closest sum to the target.
+
+Constraints:
+------------
+Time Complexity: O(N + M + P)
+Space Complexity: O(1)
+
+Sample Input-1:
+---------------
+4
+5 10 20 30
+4
+1 3 7 10
+4
+2 5 8 12
+25
+
+Sample Output-1:
+----------------
+10 7 8
+
+Explanation:
+-------------
+The sum 10 + 7 + 8 = 25, which exactly matches target.
+
+
+Sample Input-2:
+---------------
+3
+1 5 10
+3
+3 6 9
+3
+4 7 8
+30
+
+Sample Output-2:
+----------------
+10 9 8
+
+Explanation:
+------------
+The sum 10 + 9 + 8 = 27, which is the closest sum to 30 
+(minimum absolute difference |30 - 27| = 3).
+
+
+
+
+
+
+
+CP_U1_AP11_MinNoOfRefills
+
+Andy and Berry are serving water to n guests sitting in a line.
+Each guest needs a certain amount of water.
+
+Andy starts serving from the left end (guest 0).
+Berry starts serving from the right end (guest n−1).
+Both move towards the center.
+
+Each of them has a water jar:
+Andy’s jar has capacity: capacityA
+Berry’s jar has capacity: capacityB
+
+Initially, both jars are full.
+
+Before serving a guest:
+If the jar does not have enough water, it must be refilled.
+
+Refilling is instant.
+
+When both reach the same guest, the person who has more water serves that guest.
+If both have the same amount, Andy serves.
+
+Your task is to calculate how many times the jars are refilled to serve all 
+guests.
+
+Input Format:
+------------------------------------------
+An integer n – number of guests
+n integers – water required by each guest
+Integer capacityA – Andy’s jar capacity
+Integer capacityB – Berry’s jar capacity
+
+Output Format:
+----------------------------------
+Print a single integer:
+the total number of refills required
+
+Sample Input 1:
+--------------
+6
+2 4 5 1 2 3
+5
+5
+ 
+Sample Output 1:
+----------------
+3
+
+import java.util.*;
+class MinNoOfRefill{
+    public static int refill(int[] arr, int acap, int bcap){
+        int left = 0,right = arr.length-1;
+        int a = acap,b = bcap,ref = 0;
+        while(left<right){
+            if(arr[left]<=a){
+                a = a-arr[left];
+            }
+            else{
+                a = acap;
+                ref++;
+                a = a-arr[left];
+            }
+            if(arr[right]<=b){
+                b = b-arr[right];
+            }
+            else{
+                b = bcap;
+                ref++;
+                b = b-arr[right];
+            }
+            left++;
+            right--;
+        }
+        if(left==right){
+            if(a>=b){
+                if(a<arr[left]) ref++;
+            }
+            else{
+                if(b<arr[right]) ref++;
+            }
+        }
+        return ref;
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = sc.nextInt();
+        }
+        int x = sc.nextInt();
+        int y = sc.nextInt();
+        System.out.println(refill(arr,x,y));
+    }
+};
+
+
+

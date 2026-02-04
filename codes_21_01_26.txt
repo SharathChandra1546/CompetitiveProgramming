@@ -1,0 +1,434 @@
+Two brothers want to play a game, 
+The rules of the game are: one player gives two sorted lists of 
+numerical elements and a number (sum). 
+The opponent has to find the closest pair of elements 
+to the given sum.
+-> pair consists of elements from each list
+
+Please help those brothers to develop a program, that takes 
+two sorted lists as input and return a pair as output.
+
+Input Format:
+-------------
+size of list_1
+list_1 values
+size of list_2
+list_2 values
+closest number
+
+Output Format:
+--------------
+comma-separated pair
+
+Sample Input-1:
+---------------
+4
+1 4 5 7
+4
+10 20 30 40
+32
+Sample Output-1
+---------------
+1,30
+
+Sample Input-2
+---------------
+3
+2 4 6
+4
+5 7 11 13
+15
+
+Sample Output-2
+---------------
+2, 13
+
+import java.util.*;
+class ClosestPair{
+    public static void close(int n1,int n2,int[] arr1, int[] arr2, int target){
+        int left = 0, right = n2-1;
+        int var1 =0,var2 = 0;
+        int min = Integer.MAX_VALUE;
+        while(left<n1 && right>=0){
+            int sum = arr1[left]+arr2[right];
+            int diff = Math.abs(sum-target);
+            if(diff<min){
+                min = diff;
+                var1 = arr1[left];
+                var2 = arr2[right];
+            }
+            if(sum<target){
+                left++;
+            }
+            else {
+                right--;
+            }
+        }
+        System.out.print(var1+"," +var2);
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n1= sc.nextInt();
+        int[] arr1 = new int[n1];
+        for(int i=0;i<n1;i++){
+            arr1[i] = sc.nextInt();
+        }
+        int n2= sc.nextInt();
+        int[] arr2 = new int[n2];
+        for(int i=0;i<n2;i++){
+            arr2[i] = sc.nextInt();
+        }
+        int key = sc.nextInt();
+        close(n1,n2,arr1,arr2,key);
+    }
+}
+
+
+Cliff Shaw is working on the singly linked list.
+He is given a list of boxes arranged as singly linked list,
+where each box is printed a positive number on it.
+
+Your task is to help Mr Cliff to find the given list is equivalent to 
+the reverse of it or not. If yes, print "true", otherwise print "false"
+
+Input Format:
+-------------
+Line-1: space separated integers, boxes as list.
+
+Output Format:
+--------------
+Print a boolean a value.
+
+Sample Input-1:
+---------------
+3 6 2 6 3
+
+Sample Output-1:
+----------------
+true
+
+
+Sample Input-2:
+---------------
+3 6 2 3 6
+
+Sample Output-2:
+----------------
+false
+
+
+
+
+import java.util.*;
+
+class Node{    
+	int data;    
+	Node next;    
+		
+	public Node(int data) {    
+		this.data = data;    
+		this.next = null;    
+	}    
+}    
+
+class Solution
+{
+	//Write if any supporting methods here
+	
+    
+	boolean isPalindrome(Node head) 
+	{
+		//Write your code here and return boolean value
+		Node fastpt=head;
+		Node slowpt=head;
+		while(fastpt.next!=null && fastpt.next.next!=null)
+		{
+		    fastpt=fastpt.next.next;
+		    slowpt=slowpt.next;
+		}
+		Node prev=null;
+		Node curr=slowpt.next;
+		Node next=null;
+		while(curr!=null)
+		{
+		    next=curr.next;
+		    curr.next=prev;
+		    prev=curr;
+		    curr=next;
+		}
+		Node p1=head;
+		Node p2=prev;
+		while(p2!=null)
+		{
+		    if(p1.data!=p2.data)
+		    {
+		        return false;
+		    }
+		    p1=p1.next;
+		    p2=p2.next;
+		}
+		return true;
+		
+	}    
+}
+
+public class PalindromeList 
+{    
+	public Node head = null;    
+	public Node tail = null;    
+
+	public void addNode(int data) 
+	{    
+		Node newNode = new Node(data);    
+		if(head == null) 
+		{    
+			head = newNode;    
+			tail = newNode;    
+		}  
+		else 
+		{    
+			tail.next = newNode;    
+			tail = newNode;    
+		}    
+	}    
+        
+	public static void main(String[] args) 
+	{    
+		Scanner sc=new Scanner(System.in);
+		PalindromeList list = new PalindromeList();       
+		String list2[]=sc.nextLine().split(" "); 
+		for(int i=0;i<list2.length;i++)
+			list.addNode(Integer.parseInt(list2[i]));
+		Solution sl=new Solution();
+		System.out.println(sl.isPalindrome(list.head));
+	}    
+}
+
+ValidWordAbbreviation:
+
+Given a non-empty string s and an abbreviation abbr, return whether the string 
+matches with the given abbreviation.
+A string such as "word" contains only the following valid abbreviations:
+["word", "1ord", "w1rd", "wo1d", "wor1", "2rd", "w2d", "wo2", "1o1d", "1or1", 
+"w1r1", "1o2", "2r1", "3d", "w3", "4"]
+
+Notice that only the above abbreviations are valid abbreviations of the string 
+"word". 
+Any other string is not a valid abbreviation of "word".
+
+Note: Assume s contains only lowercase letters and abbr contains only lowercase 
+letters and digits.
+Example 1:
+Given s = "internationalization", abbr = "i12iz4n":
+
+Return true.
+
+Example 2:
+Given s = "apple", abbr = "a2e":
+
+Return false.
+
+Time Complexity: O(n) where n=max(len(word),len(abbr))
+Auxiliary Space:  O(1).
+
+import java.util.*;
+class ValidWord{
+    public static boolean abbr(String s1,String s2){
+        int pw = 0, pa = 0;
+        while(pw<s1.length()&& pa<s2.length()){
+            if(Character.isDigit(s2.charAt(pa))){
+                if(s2.charAt(pa) == '0') return false;
+                int sum = 0;
+                while(pa<s2.length() && Character.isDigit(s2.charAt(pa))){
+                    sum = sum * 10+(s2.charAt(pa)-'0');
+                    pa++;
+                }
+                pw+=sum;
+            }
+            else{
+                if(s1.charAt(pw)!=s2.charAt(pa)){
+                    return false;
+                }
+                pw++;
+                pa++;
+            }
+        }
+        return (pw == s1.length() && pa == s2.length());
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        String s1 = sc.next();
+        String s2 = sc.next();
+        System.out.println(abbr(s1,s2));
+    }
+}
+
+
+
+
+
+
+Threesum:
+
+You are given an integer array nums of length n and an integer target. 
+Your task is to find three integers in nums such that their sum is closest to 
+the given target.
+
+Return the sum of these three integers.
+
+You may assume that each input would have exactly one solution.
+
+Input Format:
+-------------
+Line-1: An integer n, the size of the array.
+Line-2: n space-separated integers representing the elements of the array nums.
+Line-3: A single integer target.
+
+Output Format:
+--------------
+Line-1: Print a single integer, representing the sum of three integers closest 
+to the target.
+
+Sample Input-1:
+---------------
+4
+-1 2 1 -4
+1
+
+Sample Output-1:
+----------------
+2
+
+Sample Input-2:
+---------------
+3
+0 0 0
+1
+
+Sample Output-2:
+----------------
+0
+
+
+
+CP_U1_AP11_ClosestTripletSum:
+You are given three sorted integer arrays A[], B[], and C[], and an integer 
+target.
+Your task is to find one element from each array (A[i], B[j], and C[k]) such 
+that the sum of these three elements is equal to target.
+
+If there is no exact match, return the triplet with the minimum absolute 
+difference to the target.
+
+Input Format:
+-------------
+Line 1: An integer N, the size of the first array.
+Line 2: N space-separated integers representing elements of array A.
+Line 3: An integer M, the size of the second array.
+Line 4: M space-separated integers representing elements of array B.
+Line 5: An integer P, the size of the third array.
+Line 6: P space-separated integers representing elements of array C.
+Line 7: An integer target, the required sum.
+
+Output Format:
+--------------
+Line-1: Print the triplet (A[i], B[j], C[k]) that either matches the target or 
+has the closest sum to the target.
+
+Constraints:
+------------
+Time Complexity: O(N + M + P)
+Space Complexity: O(1)
+
+Sample Input-1:
+---------------
+4
+5 10 20 30
+4
+1 3 7 10
+4
+2 5 8 12
+25
+
+Sample Output-1:
+----------------
+10 7 8
+
+Explanation:
+-------------
+The sum 10 + 7 + 8 = 25, which exactly matches target.
+
+
+Sample Input-2:
+---------------
+3
+1 5 10
+3
+3 6 9
+3
+4 7 8
+30
+
+Sample Output-2:
+----------------
+10 9 8
+
+Explanation:
+------------
+The sum 10 + 9 + 8 = 27, which is the closest sum to 30 
+(minimum absolute difference |30 - 27| = 3).
+
+
+
+CP_U1_AP12_MinNoOfRefill
+Andy and Berry are serving water to n guests sitting in a line.
+Each guest needs a certain amount of water.
+
+Andy starts serving from the left end (guest 0).
+Berry starts serving from the right end (guest n−1).
+Both move towards the center.
+
+Each of them has a water jar:
+Andy’s jar has capacity: capacityA
+Berry’s jar has capacity: capacityB
+
+Initially, both jars are full.
+
+Before serving a guest:
+If the jar does not have enough water, it must be refilled.
+
+Refilling is instant.
+
+When both reach the same guest, the person who has more water serves that guest.
+If both have the same amount, Andy serves.
+
+Your task is to calculate how many times the jars are refilled to serve all 
+guests.
+
+Input Format:
+------------------------------------------
+An integer n – number of guests
+n integers – water required by each guest
+Integer capacityA – Andy’s jar capacity
+Integer capacityB – Berry’s jar capacity
+
+Output Format:
+----------------------------------
+Print a single integer:
+the total number of refills required
+
+Sample Input 1:
+--------------
+6
+2 4 5 1 2 3
+5
+5
+ 
+Sample Output 1:
+----------------
+3
+
+
+
+
+	

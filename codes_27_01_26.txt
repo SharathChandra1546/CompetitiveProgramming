@@ -1,0 +1,155 @@
+// Write a Java program to count the number of one bits of an integer.
+import java.util.*;
+class CountofBits{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int count = 0;
+        while(n>0){
+            n &=n-1;
+            count++;
+        }
+        System.out.println(count);
+    }
+}
+
+
+// Write a java Program to perform bitwise OR operation on two integers and print the result.
+import java.util.*;
+class OROperation{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n1 = sc.nextInt();
+        int n2 = sc.nextInt();
+        System.out.println(n1|n2);
+    }
+}
+
+
+
+Check if a number is even or odd
+Note: Use Bitwise operation - AND
+
+Example1:
+------------
+input=4
+output=true
+
+
+import java.util.*;
+class Main{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        if((n&1)==0) System.out.println(true);
+        else System.out.println(false);
+        
+    }
+}
+
+
+/*Single Number- Find the element in an array that is not repeated.*/
+
+Sample Input:
+4 1 2 9 1 4 2
+
+Sample Output:
+9
+import java.util.*;
+class SingleNumber{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for(int i = 0;i<n;i++){
+            arr[i] = sc.nextInt();
+        }
+        int x=0;
+        for(int i =0;i<n;i++){
+            x = x^arr[i];
+        }
+        System.out.println(x);
+    }
+}
+
+
+You are given an integer N. Your task is to return an array ans of length N + 1 
+where each ans[i] represents the number of 1's in the binary representation of i.
+
+Input Format:
+--------------
+A single integer N, representing the range from 0 to N.
+
+Output Format:
+---------------
+An array of N+1 integers where each element represents the count of 1s in the 
+binary representation of each number from 0 to N.
+
+Sample Input-1:
+---------------
+2
+
+Sample Output-1:
+----------------
+[0,1,1]
+
+Explanation:
+------------
+0 --> 0
+1 --> 1
+2 --> 10
+
+Sample Input-2:
+---------------
+5
+
+Sample Output-2:
+--------------- 
+[0,1,1,2,1,2]
+
+Explanation:
+------------
+0 --> 0
+1 --> 1
+2 --> 10
+3 --> 11
+4 --> 100
+5 --> 101
+
+import java.util.*;
+class CountingBits{
+    public static int count(int n){
+        int count =0;
+        while(n>0){
+            n &=n-1;
+            count++;
+        }
+        return count;
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n+1];
+        for(int i=0;i<n+1;i++){
+            arr[i] = count(i);
+        }
+        for(int i=0;i<n+1;i++){
+            System.out.print(arr[i]+",");
+        }
+    }
+}
+
+Find the position of the first set bit (bit equal to 1) in the binary 
+representation of a positive integer.
+The position counting starts from 1 at the least significant bit (rightmost bit).
+
+If the number is 0, then no set bit exists and the program should return 0.
+If no set bit is found during iteration, return -1.
+
+Example 1:
+---------------
+Input: 18
+Binary of 18 → 10010
+Positions from right → 1 2 3 4 5
+Rightmost 1 is at position 2
+Output: 2
