@@ -1,0 +1,566 @@
+
+An 8th standard student has been assigned a task as part of punishment for his mistake.
+
+The task is, there is an input string STR(without any space) and an array of 
+strings words[]. Print all the pairs of indices [s, e] where s, e are starting 
+index and ending index of every string in words[] in the input string STR.
+
+Note: Print the pairs[s, e] in sorted order.
+(i.e., sort them by their first coordinate, and in case of ties sort them by 
+their second coordinate).
+
+Input Format
+------------
+Line-1: string STR(without any space)
+Line-2: space separated strings, words[]
+
+Output Format
+-------------
+Print the pairs[s, e] in sorted order.
+
+
+Sample Input-1:
+---------------
+thekmecandngitcolleges
+kmec ngit colleges
+
+Sample Output-1:
+----------------
+3 6
+10 13
+14 21
+
+
+Sample Input-2:
+---------------
+xyxyx
+xyx xy
+
+Sample Output-2:
+----------------
+0 1
+0 2
+2 3
+2 4
+
+Explanation: 
+------------
+Notice that matches can overlap, see "xyx" is found at [0,2] and [2,4].
+
+
+Sample Input-3:
+---------------
+kmecngitkmitarecsecolleges
+kmit ngit kmec cse
+
+Sample Output-3:
+----------------
+0 3
+4 7
+8 11
+15 17
+import java.util.*;
+class TrieNode {
+    TrieNode[] children = new TrieNode[26];
+    boolean isEnd;
+}
+public class IndexPairs {
+    static TrieNode root = new TrieNode();
+    static void insert(String word) {
+        TrieNode node = root;
+        for (char c : word.toCharArray()) {
+            int index = c - 'a';
+            if (node.children[index] == null) {
+                node.children[index] = new TrieNode();
+            }
+            node = node.children[index];
+        }
+        node.isEnd = true;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
+        String[] words = sc.nextLine().split(" ");
+        for (String w : words) {
+            insert(w);
+        }
+        List<int[]> result = new ArrayList<>();
+        for (int i = 0; i < str.length(); i++) {
+            TrieNode node = root;
+            for (int j = i; j < str.length(); j++) {
+                int index = str.charAt(j) - 'a';
+                if (node.children[index] == null)
+                    break;
+                node = node.children[index];
+                if (node.isEnd) {
+                    result.add(new int[]{i, j});
+                }
+            }
+        }
+        Collections.sort(result,(a, b) ->{
+            if (a[0] != b[0])
+                return a[0] - b[0];
+            return a[1] - b[1];
+        });
+        for (int[] p : result) {
+            System.out.println(p[0] + " " + p[1]);
+        }
+    }
+}
+
+
+
+
+
+
+Design and implement a Trie (Prefix Tree) to store a collection of lowercase 
+words (a–z).
+The Trie should allow duplicate word insertions and maintain the frequency of 
+each word using a counter at the EndOfWord node.
+
+The program should perform the following operations:
+-Insert Words
+-Display Words with Frequency
+-Delete a Word
+When a word is deleted, decrease its frequency by 1.
+If the frequency becomes 0, remove the word completely from the Trie.
+Display Updated Frequencies
+After deletion, print the updated list of words and their frequencies.
+-Exit the program.
+
+Example:
+--------
+Enter words:
+hell hello and and and hell and and and
+
+Words with Frequency:
+and : 6
+hell : 2
+hello : 1
+
+1.Delete Word
+2.Display
+3.Exit
+1
+Enter word to delete:
+and
+
+Updated Trie:
+and : 5
+hell : 2
+hello : 1
+import java.util.*;
+
+class Trie
+{
+    static final int NUM_CHARS = 26;
+
+    // Trie Node
+    static class TrieNode
+    {
+        TrieNode[] children = new TrieNode[NUM_CHARS];
+        boolean isEndOfWord;
+        int frequency;
+
+        TrieNode()
+        {
+            // initialize node
+        }
+    }
+
+    static TrieNode root;
+
+    // Method to insert a word into the Trie
+    static void insertWord(String word)
+    {
+
+    }
+
+    // Method to delete a word from the Trie
+    static TrieNode deleteWord(TrieNode root, String word, int depth)
+    {
+
+        return root;
+    }
+
+    // Method to check whether a node has children
+    static boolean hasChildren(TrieNode node)
+    {
+
+        return false;
+    }
+
+    // Method to display all words with their frequencies
+    static void displayWordsWithFrequency(TrieNode root, char[] word, int level)
+    {
+
+    }
+
+    // Method to build the Trie from input words
+    static void buildTrie(String[] words)
+    {
+
+    }
+
+    public static void main(String args[])
+    {
+        Scanner sc = new Scanner(System.in);
+        root = new TrieNode();
+
+        System.out.println("Enter words:");
+        String[] words = sc.nextLine().split(" ");
+
+        buildTrie(words);
+
+        char[] word = new char[50];
+
+        while(true)
+        {
+            System.out.println("\nMenu");
+            System.out.println("1. Insert Word");
+            System.out.println("2. Delete Word");
+            System.out.println("3. Display Words with Frequency");
+            System.out.println("4. Exit");
+
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch(choice)
+            {
+                case 1:
+                    System.out.println("Enter word to insert:");
+                    String insertWord = sc.nextLine();
+                    insertWord(insertWord);
+                    break;
+
+                case 2:
+                    System.out.println("Enter word to delete:");
+                    String deleteWord = sc.nextLine();
+                    root = deleteWord(root, deleteWord, 0);
+                    break;
+
+                case 3:
+                    System.out.println("\nWords with Frequency:");
+                    displayWordsWithFrequency(root, word, 0);
+                    break;
+
+                case 4:
+                    System.out.println("Exiting program...");
+                    System.exit(0);
+            }
+        }
+    }
+}
+
+
+
+
+CP_U3_AP9_SearchWord
+You are working on strings, list of words are given as source and 
+list of words are given as target, you need to find words from target list are present in the source list or not.
+if a word is present then print true otherwise print false. 
+
+NOTE: Use Trie Datastructure
+
+Input Format:
+-------------
+Line-1: A single integer N
+Line-2: List contains N space separated words of source list.
+Line-3: A single integer M
+Line-4: List contains contain M space separated words of target list.
+
+Output Format:
+---------------
+Line-1: List contains true or false
+
+Sample Input-1:
+---------------
+5
+abc def ghi jkl mno
+4
+abc fed ghi lkj
+
+Sample Output-1: 
+----------------
+[true,false,true,false]
+
+Sample Input-2:
+---------------
+10
+a b c d e f g h i j
+5
+abc d ef g j
+
+Sample Output-2:
+----------------
+[false, true, false, true, true]
+import java.io.*;
+class Trie
+{
+    static class TrieNode {
+        TrieNode[] children;
+        boolean isEndOfWord;
+        TrieNode() {
+            children = new TrieNode[26];
+            isEndOfWord = false;
+        }
+    }
+    TrieNode root;
+    Trie() {
+        root = new TrieNode();
+    }
+    void insert(String word) {
+        TrieNode current = root;
+        for (char ch : word.toCharArray()) {
+            int index = ch - 'a';
+            if (current.children[index] == null) {
+                current.children[index] = new TrieNode();
+            }
+            current = current.children[index];
+        }
+        current.isEndOfWord = true;
+    }
+    
+    //if any supporting functionalities, should go here
+    
+    List search(String[] word) {
+        //implement your code here and return list of boolean values
+    }
+    
+}
+class SearchList 
+{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Trie trie = new Trie();
+        int n = scanner.nextInt();
+		scanner.nextLine();
+		String[] word= scanner.nextLine().split(",");
+        for (int i = 0; i < n; i++) {
+            trie.insert(word[i]);
+        }
+        int m = scanner.nextInt();
+		scanner.nextLine();
+		String[] words = scanner.nextLine().split(",");
+		System.out.println(trie.search(words));
+    }
+}
+
+
+
+
+CP_U3_SP7_Top K frequent words
+Sridhar brought his latest Apple iPhone 12 pro. He started his conversation 
+with one of his friend on WhatsApp with list of words.
+
+Now it’s our task to find and return what are the most common words 
+in the list of words he used in sorted order based on occurrence from 
+largest to smallest. If any of words he used are having same occurrence 
+then consider the lexicographic order.
+
+You will be given a list of words, you need to print top P number of 
+most common used words as described in the statement. 
+
+Input Format:
+-------------
+Line-1: comma separated line of words, list of words.
+Line-2: An integer P, number of words to display. 
+
+Output Format:
+--------------
+Print P number of most common used words.
+
+
+Sample Input-1:
+---------------
+ball,are,case,doll,egg,case,doll,egg,are,are,egg,case,are,egg,are,case
+3
+
+Sample Output-1:
+----------------
+[are, case, egg]
+
+Sample Input-2:
+---------------
+ball,are,case,doll,egg,case,doll,egg,are,are,egg,case,are,egg,are
+3
+
+Sample Output-2:
+----------------
+[are, egg, case]
+import java.util.*;
+
+class Node
+{
+    public char c;
+    public boolean isWord;
+    public int count;
+    public Node[] children;
+    public String str;
+
+    public Node(char c)
+	{
+        this.c = c;
+        this.isWord = false;
+        this.count = 0;
+        children = new Node[26];
+        str = "";
+    }
+}
+
+class Trie
+{
+    public Node root;
+    public Trie(){
+        this.root = new Node('\0');
+    }
+    public void insert(String word)
+	{
+        Node curr = root;
+        for(int i  = 0;i<word.length();i++){
+            char c = word.charAt(i);
+            if(curr.children[c-'a'] == null){
+                curr.children[c-'a'] = new Node(c);
+            }
+            curr = curr.children[c-'a'];
+        }
+        curr.isWord = true;
+        curr.count +=1;
+        curr.str = word;       
+    }
+
+    public void traverse(Node root, PriorityQueue<Node> pq)
+	{
+        //Write your code here
+    }
+}
+
+public class FrequentWord 
+{
+    public static void main(String[] args) 
+	{
+        Scanner sc = new Scanner(System.in);
+        String line1 = sc.nextLine();
+        int p = sc.nextInt();
+        String[] words = line1.split(",");
+        Trie t = new Trie();
+        
+        for(int i = 0;i<words.length;i++){
+           t.insert(words[i]);
+        }
+
+	    //Write your code here
+    }
+}
+
+
+
+
+
+CP_U3_SP6_Longest word with all prefixes
+In a school, the students are given an array of strings words[]. 
+Students have to find the longest string in words[] 
+such that every prefix of it is also in words.
+
+For example, let words = ["a", "app", "ap","appl", "apply"]. 
+The string "apply" has prefixes "ap","app","appl" and "a", all of which are in words.
+
+Your task is the find and return the longest string in words as described above.
+
+If there is more than one string with the same length, return the lexicographically
+smallest one, and if no string exists, return "".
+
+Input Format
+-------------
+Line1: Space spearated strings
+
+Output Format
+--------------
+Line-1: A string 
+
+Sample Input-1:
+---------------
+k kmi km kmit
+
+Sample Output-1:
+----------------
+kmit
+
+Explanation:
+------------
+"kmit" has prefixes "kmi", "km", "k" and all of them appear in words.
+
+
+Sample Input-2:
+---------------
+t tup tupl tu tuple tupla
+
+Sample Output-2:
+----------------
+tupla
+
+Explanation:
+------------
+Both "tuple" and "tupla" have all their prefixes in words.
+However, "tupla" is lexicographically smaller, so we return that.
+
+
+Sample Input-3:
+---------------
+abc bc ab abcd
+
+Sample Output-3:
+----------------
+""
+
+import java.util.*;
+
+class trieHelper 
+{
+    Trie root = new Trie();
+    String res = "";
+    public String longestWord(String[] words) {
+        for (String word : words) 
+			addWord(word);
+        for (String word : words) 
+			searchPrefix(word);
+        return res;
+    }
+    
+    private void searchPrefix(String word) {
+		//Write your code here
+		Trie cur = root;
+		for(char c: word.toCharArray()){
+		    cur= cur.children[c-'a'];
+		    if(!cur.isWord) return;
+		}
+		if(res.equal("")){
+		    res = word;
+		    return;
+		}
+		if(res.length()<word.length()||res.length() == word.length() &&res.compareTo(word)>0) res = word;
+	}
+    
+    private void addWord(String word) {
+        Trie cur = root;
+        for(char c : word.toCharArray()) {
+            if (cur.children[c-'a'] == null) 
+				cur.children[c-'a'] = new Trie();
+            cur = cur.children[c-'a'];
+        }
+        cur.isWord = true;
+    }
+}
+class Trie {
+    Trie[] children = new Trie[26];
+    boolean isWord;
+}
+
+class LongestWord
+{
+	public static void main(String args[]){
+		Scanner sc=new Scanner(System.in);
+		String arr[]=sc.nextLine().split(" ");
+		System.out.println(new trieHelper().longestWord(arr));
+	}
+}

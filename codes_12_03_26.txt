@@ -1,0 +1,560 @@
+CP_U3_SP7_Suffix_Tree
+//implement SuffixTree logic
+import java.util.*;
+
+class SuffixTrie 
+{	
+	static final int NUM_CHARS = 26;
+	// SuffixTrie node
+	static class SuffixTrieNode
+	{
+		SuffixTrieNode[] children = new SuffixTrieNode[NUM_CHARS];
+	
+		// isEndOfWord is true if the node represents end of a word
+		boolean isEndOfWord;
+		
+		SuffixTrieNode()
+		{
+			isEndOfWord = false;
+			for (int i = 0; i < NUM_CHARS; i++)
+				children[i] = null;
+		}
+	};
+	
+	static SuffixTrieNode root;
+	
+	// If not present, inserts word into SuffixTrie
+	// If the word is prefix of SuffixTrie node, just marks leaf node
+	static void insert(String word)
+	{
+	
+	}
+	
+	// To check if current node is leaf node or not
+	static boolean isLeafNode(SuffixTrieNode root) 
+	{
+		
+	}
+ 
+	// print SuffixTrie
+	static void print(SuffixTrieNode root, char[] str, int level) 
+	{
+		
+	}
+
+	public static void main(String args[])
+	{
+		
+	}	
+}
+
+
+
+
+
+
+CP_U3_AP45_Distinct_SubStrings_SuffixTrie
+A communication researcher is analyzing a trail of signal frequencies encoded 
+as a lowercase string. 
+Each character in the string represents a frequency tone recorded in a timeline.
+
+To evaluate the diversity of communication, the researcher wants 
+to count how many distinct contiguous frequency patterns (substrings) are 
+present in the entire signal trail. 
+These patterns can be of any length and must be unique.
+
+To accomplish this, you are tasked with writing an efficient algorithm using 
+Trie (Prefix Tree) based suffix structures to count all distinct substrings of 
+the given signal trail.
+
+Input Format:
+-------------
+Line-1: A lowercase string s representing the frequency trail.
+
+Output Format:
+--------------
+Line-1: Print a single integer — the number of distinct substrings of the 
+input string.
+
+Constraints:
+-------------
+-> 1 ≤ |s| ≤ 10^4
+-> s contains only lowercase English letters.
+
+
+Sample Input-1:
+---------------
+abc
+
+Sample Output-1:
+----------------
+6
+
+Explanation:
+------------
+The substrings are: "a", "b", "c", "ab", "bc", "abc".
+Total = 6 distinct substrings.
+
+
+Sample Input-1:
+---------------
+abc
+
+Sample Output-1:
+----------------
+6
+
+Explanation:
+------------
+The substrings are: "a", "b", "c", "ab", "bc", "abc".
+Total = 6 distinct substrings.
+
+
+Sample Input-2:
+---------------
+aaa
+
+Sample Output-2:
+----------------
+3
+
+Explanation:
+------------
+Substrings: "a", "aa", "aaa" → 3 unique substrings.
+import java.util.*;
+
+class TrieNode {
+    boolean isWord;
+    TrieNode[] child;
+
+    TrieNode() {
+        isWord = false;
+        child = new TrieNode[26];
+    }
+}
+
+public class SuffixTrie_distinct_substrings {
+
+    // Method to count distinct substrings
+    static int countSubs(String s) {
+
+        TrieNode head = new TrieNode();
+
+        // Students must write logic here
+
+        return 0;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String str = sc.nextLine();
+
+        int result = countSubs(str);
+
+        System.out.println(result);
+    }
+}
+
+
+
+
+
+
+
+
+
+Cp_U3_AP_Longest Common Palindromic Substring
+You are given a sequence of lowercase words separated by spaces.
+Your task is to determine the longest palindromic substring that appears in every word in the given sequence.
+If multiple substrings have the same maximum length, you may return any one of them.
+If no common palindromic substring exists among all words, return an empty string.
+
+Input Format:
+------------
+Line-1: Space separated lowercase words
+
+Output Format:
+-------------
+Print the longest palindromic substring that appears in all the words
+
+Constraints:
+------------
+1 ≤ number of words ≤ 1000
+1 ≤ length of each word ≤ 1000
+Words contain only lowercase English letters
+
+Example 1:
+Input:
+------
+abba cabba dabba
+Output:
+------
+abba
+
+Example 2:
+Input:
+-----
+abc def ghi
+Output:
+------
+
+
+import java.util.*;
+
+class TrieNode {
+
+    TrieNode[] children;
+    int count;
+    int lastVisited;
+    String substring;
+
+    TrieNode() {
+        children = new TrieNode[26];
+        count = 0;
+        lastVisited = -1;
+        substring = "";
+    }
+}
+
+public class lcps {
+
+    static TrieNode root = new TrieNode();
+
+    // check palindrome
+    static boolean isPalindrome(String s) {
+
+    }
+
+    // insert substrings into trie
+    static void insert(String word, int wordIndex) {
+
+    }
+
+    // find longest common palindromic substring
+    static String findLongest(TrieNode root, int totalWords) {
+
+    }
+
+    // main logic function
+    static String longestCommonPalindromicSubstring(String[] words) {
+
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String line = sc.nextLine();
+
+        String[] words = line.split(" ");
+
+        System.out.println(longestCommonPalindromicSubstring(words));
+    }
+}
+
+
+
+CP_U3_AP49_PatternMatching
+Mr. Balu is tasked with developing a pattern matching algorithm to determine if 
+given strings adhere to a specific pattern. He will be Given an array of strings 
+queries and a string pattern, and he need to return a boolean array answer where 
+answer[i] is true if queries[i] matches pattern, and false otherwise.
+Can you develop a program for this task, Use Trie Approach to solve this problem.
+
+A query word queries[i] matches pattern if you can insert lowercase English 
+letters pattern so that it equals the query. You may insert each character at 
+any position and you may not insert any characters.
+
+Input format :
+--------------
+Line 1:comma seperated string
+Line 2:String
+
+Output format: 
+--------------
+list consists of true or false
+
+Example 1:
+----------
+Input = FooBar,FooBarTest,FootBall,FrameBuffer,ForceFeedBack
+FB
+Output= [true,false,true,true,false]
+
+Explanation: "FooBar" can be generated like this "F" + "oo" + "B" + "ar".
+"FootBall" can be generated like this "F" + "oot" + "B" + "all".
+"FrameBuffer" can be generated like this "F" + "rame" + "B" + "uffer".
+
+Constraints:
+------------
+1 <= pattern.length, queries.length <= 100
+1 <= queries[i].length <= 100
+queries[i] and pattern consist of English letters.
+
+import java.util.*;
+
+class TrieNode {
+    TrieNode[] children;
+    boolean isEnd;
+
+    TrieNode() {
+        // initialize children array
+    }
+}
+
+class Solution {
+
+    TrieNode root;
+
+    public Solution() {
+        // initialize root
+    }
+
+    // Method to insert pattern into Trie
+    public void insert(String word) {
+        // Implement
+    }
+
+    // Method to check if query matches camel case pattern
+    boolean match(String s, int n) {
+        // Implement
+        return false;
+    }
+
+    // Main function that returns matching results
+    public List<Boolean> camelMatch(String[] queries, String pattern) {
+        // Implement
+        return null;
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String[] words = sc.nextLine().split(",");
+        String key = sc.nextLine();
+
+        Solution sol = new Solution();
+
+        // call camelMatch method and print result
+        System.out.println(sol.camelMatch(words, key));
+    }
+}
+
+
+
+
+
+CP_U3_AP48_SearchEngine
+You are developing a search suggestion feature for a hypermarket system.
+The system has a list of product names.
+When a user starts typing a search word, the system should show product 
+suggestions after each character typed.
+
+Rules:
+-----
+Suggestions must start with the typed prefix.
+Show at most 3 products for each prefix.
+If more than 3 products match, return the first 3 in lexicographical order.
+After each character is typed, store the suggestions in a list.
+Finally, return a list of suggestion lists.
+
+Input Format:
+-------------
+A comma-separated list of product names
+A search word
+
+Output Format:
+--------------
+A list of lists containing suggested products after each character is typed.
+
+Example 1:
+---------
+Input:
+mobile,mouse,moneypot,monitor,mousepad
+mouse
+Output:
+[
+["mobile","moneypot","monitor"],
+["mobile","moneypot","monitor"],
+["mouse","mousepad"],
+["mouse","mousepad"],
+["mouse","mousepad"]
+]
+
+Constraints:
+------------
+Number of products ≤ 1000
+Product names contain lowercase letters
+Search word length ≤ 1000
+import java.util.*;
+
+class Solution {
+
+    class TrieNode {
+        TrieNode[] children;
+        int[] count;
+        boolean isEnd;
+
+        public TrieNode() {
+
+        }
+    }
+
+    public List<List<String>> suggestedProducts(String[] products, String searchWord) {
+
+    }
+
+    void dfsTraversal(TrieNode node, String prefix, int[] count, List<String> suggestions) {
+
+    }
+
+    public void insertWord(String word, TrieNode root) {
+
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        String line = sc.nextLine();
+
+        String[] products;
+
+        String searchWord = sc.nextLine();
+
+        Solution solution = new Solution();
+
+        System.out.println(solution.suggestedProducts(products, searchWord));
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+CP_U3_AP47_ReplaceWords
+In a dictionary, some words are called roots.
+A root can be the starting part (prefix) of a longer word.
+
+For example:
+------------
+root = "an"
+word = "another"
+Here "an" is the root of "another".
+
+You are given:
+A list of root words (dictionary)
+A sentence containing several words separated by spaces
+
+For every word in the sentence:
+If the word starts with a root, replace it with that root.
+If multiple roots match, choose the shortest root.
+If no root matches, keep the word unchanged.
+Return the modified sentence after all replacements.
+
+Input Format
+------------
+First line contains an integer n → number of root words
+Next n lines contain the root words
+Last line contains the sentence
+
+Output Format
+------------
+Print the sentence after replacing words with their roots.
+
+Example 1:
+----------
+Input:
+-----
+3
+cat
+bat
+rat
+the cattle was rattled by the battery
+
+Output:
+--------
+the cat was rat by the bat
+
+Constraints
+-----------
+1 ≤ roots ≤ 1000
+Roots: lowercase letters only
+Sentence: lowercase letters + spaces
+Words separated by one space
+≤ 1000 words, each word length ≤ 1000
+import java.util.*;
+
+class Solution {
+
+    static class TrieNode {
+        char character;
+        boolean isEndOfRoot;
+        Map<Character, TrieNode> children;
+
+        TrieNode(char character) {
+
+        }
+
+        void addChild(char character, TrieNode node) {
+
+        }
+
+        TrieNode getChild(char character) {
+
+        }
+
+        void removeChildren() {
+
+        }
+    }
+
+    public String replaceWords(List<String> roots, String sentence) {
+
+    }
+
+    private String findRoot(String word, TrieNode rootNode) {
+
+    }
+
+    private TrieNode buildTrie(List<String> roots) {
+
+    }
+
+    private void insertRoot(String rootWord, TrieNode node) {
+
+    }
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        int rootCount = scanner.nextInt();
+        scanner.nextLine();
+
+        List<String> rootDictionary = new ArrayList<>();
+
+        String sentence = scanner.nextLine();
+
+        Solution solution = new Solution();
+
+        String result = solution.replaceWords(rootDictionary, sentence);
+
+        System.out.println(result);
+    }
+}
+
+
+
+
+
+
+

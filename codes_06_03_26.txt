@@ -1,0 +1,379 @@
+ 1. Write a Java program to implement a Trie (Prefix Tree) that stores a set of 
+lowercase English words.
+The program should support operations such as Insert, Search, Delete and Display.
+
+Initially, the program reads a line containing words separated by spaces and 
+inserts them into the Trie.
+After constructing the Trie, the program should repeatedly accept numeric 
+options from the user to perform the following operations:
+
+1.Insert – Insert a new word into the Trie.
+2.Search – Check whether a given word exists in the Trie.
+3.Delete – Delete a word from the Trie if it exists.
+4.Display – Display all the words currently stored in the Trie.
+5.Exit – Terminate the program.
+
+All words consist only of lowercase English letters (a–z).
+
+Input Format:
+------------
+- A list of words separated by spaces to initialize the Trie.
+- A number representing the operation to be performed.
+- If the option is 1, 2, or 3, the next input will be a word related to that 
+operation.
+- The last input will always be 5, which terminates the program.
+
+Output Format:
+-------------
+- The program should display appropriate messages based on the operation 
+performed.
+- After Insert, display the updated content of the Trie.
+- For Search, print whether the word is present or not.
+- After Delete print whether deletion was successful and display the updated 
+Trie.
+- For Display, print all words currently stored in the Trie.
+
+Example 1:
+---------
+Input
+-----
+apple ape ant animal
+4
+2 apple
+1 ball
+3 ape
+4
+5
+
+Output
+------
+//(4)
+Content of Trie:
+animal
+ant
+ape
+apple
+
+//(2)
+apple is present
+
+//(1)
+Content of Trie:
+animal
+ant
+ape
+apple
+ball
+
+//(3)
+ape is deleted
+
+//(3)
+Content of Trie after deletion:
+animal
+ant
+apple
+ball
+
+//(4)
+Content of Trie:
+animal
+ant
+apple
+
+import java.util.*;
+class Trie
+{
+    static final int NUM_CHARS = 26;
+    static boolean isDeleted = false;
+    // Trie Node Structure
+    static class TrieNode
+    {
+        TrieNode[] children;
+        boolean isEndOfWord;
+        TrieNode()
+        {
+            // Initialize children array and isEndOfWord
+            children=new TrieNode[NUM_CHARS];
+            isEndOfWord=false;
+            
+        }
+    }
+    static TrieNode root;
+    // Insert word into Trie
+    static void insert(String key)
+    {
+        // Write logic to insert word
+        TrieNode curr=root;
+        for(int i=0;i<key.length();i++)
+        {
+            int index=key.charAt(i)-'a';
+            if(curr.children[index]==null)
+                curr.children[index]=new TrieNode();
+            curr=curr.children[index];
+        }
+        curr.isEndOfWord=true;
+    }
+
+    // Search word in Trie
+    static boolean search(String key)
+    {
+        // Write logic to search word
+        TrieNode curr=root;
+        for(int i=0;i<key.length();i++)
+        {
+            int index=key.charAt(i)-'a';
+            if(curr.children[index]==null)
+                return false;
+            curr=curr.children[index];
+        }
+        return curr!=null && curr.isEndOfWord;
+    }
+    // Check if node has children
+    static boolean isEmpty(TrieNode root)
+    {
+        // Write logic
+        for(int i=0;i<NUM_CHARS;i++)
+        {
+            if(root.children[i]!=null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    // Delete word from Trie
+    static TrieNode delete(TrieNode root, String key, int depth)
+    {
+        // Write logic to delete word
+        return root;
+    }
+
+    // Check if node is leaf
+    static boolean isLeafNode(TrieNode root)
+    {
+        // Write logic
+        return root.isEndOfWord;
+    }
+
+    // Display words in Trie
+    static void print(TrieNode root, char[] str, int level)
+    {
+        // Write logic to display words
+        if(root.isEndOfWord)
+        {
+            for(int i=0;i<level;i++)
+            {
+                System.out.print(str[i]);
+            }
+            System.out.println();
+        }
+        for(int i=0;i<NUM_CHARS;i++)
+        {
+            if(root.children[i]!=null)
+            {
+                str[level]=(char)(i+'a');
+                print(root.children[i],str,level+1);
+            }
+        }
+    }
+
+    public static void main(String args[])
+    {
+        Scanner sc = new Scanner(System.in);
+
+        // Read initial words
+        String keys[] = sc.nextLine().split(" ");
+
+        root = new TrieNode();
+
+        // Construct Trie
+        for(int i = 0; i < keys.length; i++)
+        {
+            insert(keys[i]);
+        }
+
+        char[] str = new char[50];
+        String word;
+
+        while(true)
+        {
+            System.out.println("Enter option:");
+            System.out.println("1. Insert");
+            System.out.println("2. Search");
+            System.out.println("3. Delete");
+            System.out.println("4. Display");
+            System.out.println("5. Exit");
+
+            int opt = sc.nextInt();
+            sc.nextLine();
+            switch(opt)
+            {
+                case 1:
+                    String w=sc.nextLine();
+                    insert(w);
+                    break;
+                case 2:
+                    String s=sc.nextLine();
+                    if(search(s))
+                        System.out.println("Word found");
+                    else
+                        System.out.println("Word not found");
+                    break;
+                case 3:
+                    String d=sc.nextLine();
+                    root=delete(root,d,0);
+                    break;
+                case 4:
+                    print(root,str,0);
+                    break;
+                default:
+                    System.exit(0);
+            }
+            // Write menu handling logic
+        }
+    }
+}
+
+
+
+CP_U3_AP7_Trie_WordCount
+Design and implement a Trie (Prefix Tree) to store a collection of lowercase 
+words (a–z).
+The Trie should allow duplicate word insertions and maintain the frequency of 
+each word using a counter at the EndOfWord node.
+
+The program should perform the following operations:
+-Insert Words
+-Display Words with Frequency
+-Delete a Word
+When a word is deleted, decrease its frequency by 1.
+If the frequency becomes 0, remove the word completely from the Trie.
+Display Updated Frequencies
+After deletion, print the updated list of words and their frequencies.
+-Exit the program.
+
+Example:
+--------
+Enter words:
+hell hello and and and hell and and and
+
+Words with Frequency:
+and : 6
+hell : 2
+hello : 1
+
+1.Delete Word
+2.Display
+3.Exit
+1
+Enter word to delete:
+and
+
+Updated Trie:
+and : 5
+hell : 2
+hello : 1
+
+import java.util.*;
+
+class Trie
+{
+    static final int NUM_CHARS = 26;
+
+    // Trie Node
+    static class TrieNode
+    {
+        TrieNode[] children = new TrieNode[NUM_CHARS];
+        boolean isEndOfWord;
+        int frequency;
+
+        TrieNode()
+        {
+            // initialize node
+        }
+    }
+
+    static TrieNode root;
+
+    // Method to insert a word into the Trie
+    static void insertWord(String word)
+    {
+
+    }
+
+    // Method to delete a word from the Trie
+    static TrieNode deleteWord(TrieNode root, String word, int depth)
+    {
+
+        return root;
+    }
+
+    // Method to check whether a node has children
+    static boolean hasChildren(TrieNode node)
+    {
+
+        return false;
+    }
+
+    // Method to display all words with their frequencies
+    static void displayWordsWithFrequency(TrieNode root, char[] word, int level)
+    {
+
+    }
+
+    // Method to build the Trie from input words
+    static void buildTrie(String[] words)
+    {
+
+    }
+
+    public static void main(String args[])
+    {
+        Scanner sc = new Scanner(System.in);
+        root = new TrieNode();
+
+        System.out.println("Enter words:");
+        String[] words = sc.nextLine().split(" ");
+
+        buildTrie(words);
+
+        char[] word = new char[50];
+
+        while(true)
+        {
+            System.out.println("\nMenu");
+            System.out.println("1. Insert Word");
+            System.out.println("2. Delete Word");
+            System.out.println("3. Display Words with Frequency");
+            System.out.println("4. Exit");
+
+            int choice = sc.nextInt();
+            sc.nextLine();
+
+            switch(choice)
+            {
+                case 1:
+                    System.out.println("Enter word to insert:");
+                    String insertWord = sc.nextLine();
+                    insertWord(insertWord);
+                    break;
+
+                case 2:
+                    System.out.println("Enter word to delete:");
+                    String deleteWord = sc.nextLine();
+                    root = deleteWord(root, deleteWord, 0);
+                    break;
+
+                case 3:
+                    System.out.println("\nWords with Frequency:");
+                    displayWordsWithFrequency(root, word, 0);
+                    break;
+
+                case 4:
+                    System.out.println("Exiting program...");
+                    System.exit(0);
+            }
+        }
+    }
+}

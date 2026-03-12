@@ -1,0 +1,315 @@
+CP_U3_SP3_Treap
+Implement a Treap data structure that performs the following operations:
+-Insert elements into the Trea6p.
+-Display all nodes (key and priority).
+-Search for a given element.
+-Delete a given element.
+-Display the updated Treap after deletion.
+
+Input Format:
+------------
+An integer n — number of elements to insert.
+n space-separated integers — keys to be inserted into the Treap.
+An integer — key to search.
+One or more integers — keys to delete.
+Enter -1 to stop deletion.
+
+Output Format:
+-------------
+Display the Preorder Traversal of the Treap after insertion.
+Display the search result 
+After each deletion, display:After delete; 
+followed by the preorder traversal of the updated Treap.
+
+Sample Input - 1:
+-----------------
+6
+2 4 3 1 7 5
+3
+4
+-1
+
+Sample Output - 1:
+-------------------
+Key: 4 Priority: 87
+Key: 2 Priority: 65
+Key: 1 Priority: 22
+Key: 3 Priority: 70
+Key: 7 Priority: 50
+Key: 5 Priority: 15
+
+Element found: 3 with Priority: 70
+
+Treap after deletion:
+Key: 3 Priority: 70
+Key: 2 Priority: 65
+Key: 1 Priority: 22
+Key: 7 Priority: 50
+Key: 5 Priority: 15
+
+import java.util.Scanner;
+// A Treap Node
+class TreapNode
+{
+	int key, priority;
+	TreapNode left, right;
+	
+}
+
+class Treap
+{
+	public static TreapNode rightRotate(TreapNode y) 
+	{
+		TreapNode x = y.left;
+		TreapNode T2 = x.right;
+		x.right = y;
+		y.left=T2;
+		return x;
+	}
+
+	// A utility function to left rotate subtree rooted with x
+	public static TreapNode leftRotate(TreapNode x) 
+	{
+		TreapNode y = x.right;
+		TreapNode t2 = y.left;
+		y.left = x;
+		x.right = t2;
+		return y;
+	}
+
+	/* Utility function to add a new key */
+	public static TreapNode newNode(int key) 
+	{
+		TreapNode temp = new TreapNode();
+		temp.key = key;
+		temp.priority = (int)(Math.random()*100);
+		temp.left = null;
+		temp.right = null;
+		return temp;
+	}
+	
+	
+	public static TreapNode insertNode(TreapNode root, int key) 
+	{
+	    if(root == null){
+	        return newNode(key);
+	    }
+	    if(key<root.key){
+	        root.left= insertNode(root.left,key);
+	        if(root.left.priority>root.priority){
+	            root = rightRotate(root);
+	        }
+	    }
+	    else if(key>root.key){
+	       root.right = insertNode(root.right,key);
+	       if(root.right.priority>root.priority){
+	           root = leftRotate(root);
+	       }
+	    }
+	    return root;
+	}
+
+	/* Recursive implementation of Delete() */
+	public static TreapNode deleteNode(TreapNode root, int key) {
+	    if(root== null) return root;
+	    if(key<root.key){
+	        root.left = deleteNode(root.left,key);
+	   }
+	   else if(key>root.key){
+	       root.right = deleteNode(root.right,key);
+	   }
+	   else if(key==root.key){
+	       if(root.left==null){
+	           root = root.right;
+	       }
+	       else if(root.right==null){
+	           root = root.left;
+	       }
+	       else if(root.left.priority<root.right.priority){
+	           root = leftRotate(root);
+	           root.left = deleteNode(root.left,key);
+	       }
+	       else{
+	           root = rightRotate(root);
+	           root.right = deleteNode(root.right,key);
+	       }
+	   }
+	   return root;
+    }
+
+	// Search a given key in a given BST
+	public static TreapNode search(TreapNode root, int key)
+	{
+	    if(root==null) return null;
+	    if(key<root.key){
+	        return search(root.left,key);
+	    }
+	    else if(key>root.key){
+	       return search(root.right,key);
+	    }
+	    else if(key==root.key){
+	       return root;
+	    }
+	    return null;
+	}
+
+	static void preorder(TreapNode root)
+	{
+	    if(root!=null){
+	        System.out.println("Key: "+ root.key+"  Priority: "+root.priority);
+    	    preorder(root.left);
+    	    preorder(root.right);
+	    }
+	}
+
+	
+	
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = sc.nextInt();
+        }
+        TreapNode root = null;
+        for(int a:arr){
+            root = insertNode(root,a);
+        }
+		preorder(root);
+		System.out.println("Enter item to search ");
+		int key = sc.nextInt();
+
+		TreapNode result = search(root, key);
+		if(result != null)
+			System.out.println("Search result "+ result.key + " " + result.priority);
+		else
+			System.out.println("Key " + key + " not found");
+		
+		do
+		{
+			System.out.println("Enter item to delete ");
+			key = sc.nextInt();
+			root = deleteNode(root, key);
+			System.out.println("After delete");
+			preorder(root);
+		} while(key != -1 && root != null);
+    }
+}
+
+
+CP_U3_SP4_kth Largest_Treap
+There are n football players standing in the ground, coach wants to know the 
+K-th largest height of the players. Given an array of heights[] and the value 
+of K. 
+Help the coach to find the P'th largest height.
+
+Note: You are supposed to print the K'th largest height in the sorted order 
+of heights[].
+      Not the P'th distinct height.
+
+Input Format:
+-------------
+Line-1: Size of array n and P value(space separated)
+Line-2: Array elements of size n.
+
+Output Format:
+--------------
+Print K'th largest height.
+
+Sample input-1:
+---------------
+8 2
+1 2 1 3 4 5 5 5
+
+Sample output-1:
+----------------
+5
+
+Sample input-2:
+---------------
+6 3
+2 4 3 1 2 5
+
+Sample output-2:
+----------------
+3
+
+import java.util.*;
+class TreapNode
+{
+    int data;
+    int priority;
+    TreapNode left,right;
+    TreapNode(int data)
+    {
+        this.data = data;
+        this.priority = new Random().nextInt(1000);
+        this.left = this.right = null;
+    }
+}
+class KthLargest
+{
+    static int k;
+    static int count = 0;
+    public static TreapNode rotateLeft(TreapNode root)
+    {
+        TreapNode y = root.right;
+        TreapNode t2 = y.left;
+        y.left = root;
+        root.right = t2;
+        return y;
+    }
+    public static TreapNode rotateRight(TreapNode root)
+    {
+        TreapNode x = root.left;
+        TreapNode t2 = x.right;
+        x.right = root;
+        root.left = t2;
+        return x;
+    }
+    public static TreapNode insertNode(TreapNode root,int data)
+    {
+        if(root == null)
+            return new TreapNode(data);
+        if(data < root.data)
+        {
+            root.left = insertNode(root.left,data);
+
+            if(root.left.priority > root.priority)
+                root = rotateRight(root);
+        }
+        else
+        {
+            root.right = insertNode(root.right,data);
+
+            if(root.right.priority > root.priority)
+                root = rotateLeft(root);
+        }
+        return root;
+    }
+    static void inorder(TreapNode root)
+    {
+        if(root == null)
+            return;
+        inorder(root.left);
+        count++;
+        if(count == k)
+            System.out.println(root.data);
+        inorder(root.right);
+    }
+
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int p = sc.nextInt();
+        k = n - p + 1;
+        int arr[] = new int[n];
+        for(int i=0;i<n;i++)
+            arr[i] = sc.nextInt();
+        TreapNode root = null;
+        for(int a:arr)
+            root = insertNode(root,a);
+        inorder(root);
+    }
+}
